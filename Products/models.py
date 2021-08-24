@@ -41,24 +41,24 @@ class Product(models.Model):
 
 	def get_image(self):
 		if self.image:
-			return f'http://localhost:8000/{self.image}'
+			return f'http://localhost:8000/media/{self.image}'
 		return ''
 
 	def get_thumbnail(self):
 		if self.thumbnail:
-			return f'http://localhost:8000/{self.thumbnail}'
+			return f'http://localhost:8000/media/{self.thumbnail}'
 		else:
 			if self.image:
-				self.thumbnail = self.make_thumbmail(self.image)
+				self.thumbnail = self.make_thumbnail(self.image)
 				self.save()
 
-				return f'http://localhost:8000/{self.thumbnail}'
+				return f'http://localhost:8000/media/{self.thumbnail}'
 			else:
 				return ''
 
 	def make_thumbnail(self, image, size=(300,200)):
 		img = Image.open(image)
-		img.convert('rgb')
+		img.convert('RGB')
 		img.thumbnail(size)
 
 		thumb_io = BytesIO()

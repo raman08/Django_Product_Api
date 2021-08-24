@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'djoser',
-	'Products'
+	'Products',
+    'Orders',
+    'Users'
 ]
 
 MIDDLEWARE = [
@@ -59,6 +61,26 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Django_Backend.urls'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+}
+
+AUTH_USER_MODEL = 'Users.user'
+
+
+DJOSER = {
+    'USER_ID_FIELD' : 'email',
+    'USER_CREATE_PASSWORD_RETYPE':'True',
+    'SET_PASSWORD_RETYPE':'True',
+    'SERIALIZERS': {
+        'user_create': 'Users.serializers.UserCreateSerializer',
+        'user': 'Users.serializers.UserSerializer',
+    }
+}
 
 TEMPLATES = [
     {
@@ -138,3 +160,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR,  'media/')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Stripe Seceret Key
+STRIPE_SECRET_KEY = 'sk_test_51IwmAqSCkmtcHJB7jGCIyG8g6TOIfHYmsuiPpQcPXy4KALl7a01ZLRnxNyNnReIwFqMwKhsdQvLmaBrM3VGZKJd500f3FnCcNb'
